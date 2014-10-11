@@ -1,11 +1,10 @@
 /* A simplified way to customize */
 #define USE_TERM_STATUS 1
 #define BOTTOM_TITLE    0
-#define HILIGHT_CURRENT 1
+#define HILIGHT_CURRENT 0
 #define HILIGHT_SYNTAX  1
 #define SHOW_NONPRINT   0
 #define HANDLE_MOUSE    1
-#define VIM_BINDINGS    1
 
 /* Things unlikely to be changed, yet still in the config.h file */
 static const bool   isutf8     = TRUE;
@@ -103,6 +102,7 @@ static const Key curskeys[] = { /* Plain keys here, no CONTROL or META */
 
 static const Key stdkeys[] = {
 /* keyv.c,                test,                     func,        arg */
+/*
 { .keyv.c = CONTROL('@'), { 0,     0,    0,   0 },  f_move,      { .m = m_tomark } },
 { .keyv.c = META(' '),    { 0,     0,    0,   0 },  f_mark,      { 0 } },
 { .keyv.c = META('`'),    { 0,     0,    0,   0 },  f_mark,      { 0 } },
@@ -129,12 +129,12 @@ static const Key stdkeys[] = {
 { .keyv.c = CONTROL('K'), { t_eol, t_rw, 0,   0 },  f_delete,    { .m = m_nextchar    } },
 { .keyv.c = CONTROL('K'), { t_rw,  0,    0,   0 },  f_delete,    { .m = m_eol         } },
 { .keyv.c = CONTROL('L'), { 0,     0,    0,   0 },  f_center,    { 0                  } },
-{ .keyv.c = META('l'),    { t_sel, t_rw, 0,   0 },  f_pipe,      { .v = "tr [A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ] [a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþ]" } }, /* Lowercase */
+{ .keyv.c = META('l'),    { t_sel, t_rw, 0,   0 },  f_pipe,      { .v = "tr [A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ] [a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþ]" } }, /* Lowercase /
 { .keyv.c = CONTROL('M'), { t_rw,  t_ai, 0,   0 },  f_pipeai,    { .v = AUTOINDENT    } } ,
 { .keyv.c = CONTROL('M'), { t_rw,  t_ins,0,   0 },  f_insert,    { .v = "\n"          } },
 { .keyv.c = CONTROL('M'), { 0,     0,    0,   0 },  f_move,      { .m = m_nextline    } },
 { .keyv.c = CONTROL('N'), { 0,     0,    0,   0 },  f_move,      { .m = m_nextline    } },
-{ .keyv.c = CONTROL('O'), { t_sel, 0,    0,   0 },  f_select,    { .m = m_tosel       } }, /* Swap fsel and fcur */
+{ .keyv.c = CONTROL('O'), { t_sel, 0,    0,   0 },  f_select,    { .m = m_tosel       } }, /* Swap fsel and fcur /
 { .keyv.c = CONTROL('P'), { 0,     0,    0,   0 },  f_move,      { .m = m_prevline    } },
 { .keyv.c = CONTROL('Q'), { t_rw,  0,    0,   0 },  f_toggle,    { .i = S_InsEsc      } },
 { .keyv.c = CONTROL('R'), { t_redo,t_rw, 0,   0 },  f_undo,      { .i = -1            } },
@@ -145,7 +145,7 @@ static const Key stdkeys[] = {
 { .keyv.c = CONTROL('T'), { 0,     0,    0,   0 },  f_pipero ,   { .v = TOCLIP        } },
 { .keyv.c = CONTROL('U'), { t_bol, t_rw, 0,   0 },  f_delete,    { .m = m_prevchar    } },
 { .keyv.c = CONTROL('U'), { t_rw,  0,    0,   0 },  f_delete,    { .m = m_bol         } },
-{ .keyv.c = META('u'),    { t_sel, t_rw, 0,   0 },  f_pipe,      { .v = "tr [a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþ] [A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ] | sed 's/ß/SS/g'" } }, /* Uppercase */
+{ .keyv.c = META('u'),    { t_sel, t_rw, 0,   0 },  f_pipe,      { .v = "tr [a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþ] [A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ] | sed 's/ß/SS/g'" } }, /* Uppercase /
 { .keyv.c = CONTROL('V'), { 0,     0,    0,   0 },  f_move,      { .m = m_prevscr     } },
 { .keyv.c = META('v'),    { 0,     0,    0,   0 },  f_move,      { .m = m_nextscr     } },
 { .keyv.c = CONTROL('W'), { t_rw,  0,    0,   0 },  f_delete,    { .m = m_prevword    } },
@@ -155,26 +155,21 @@ static const Key stdkeys[] = {
 { .keyv.c = CONTROL('Y'), { t_rw,  0,    0,   0 },  f_pipenull,  { .v = FROMCLIP } },
 { .keyv.c = CONTROL('Z'), { 0,     0,    0,   0 },  f_suspend,   { 0                  } },
 { .keyv.c = CONTROL('['), { t_vis, 0,    0,   0 },  f_toggle,    { .i = S_Visual      } },
-#if VIM_BINDINGS
-{ .keyv.c = CONTROL('['), { t_ins, 0,  0,   0 },  f_toggle,    { .i = S_Command     } },
-#else
 { .keyv.c = CONTROL('['), { 0,     0,    0,   0 },  f_spawn,     CMD_P },
-#endif
 { .keyv.c = CONTROL('\\'),{ t_rw,  0,    0,   0 },  f_spawn,     PIPE                   },
 { .keyv.c = META('\\'),   { t_rw,  0,    0,   0 },  f_spawn,     SED                    },
 { .keyv.c = CONTROL(']'), { 0,     0,    0,   0 },  f_extsel,    { .i = ExtDefault    } },
 { .keyv.c = CONTROL('^'), { t_redo,t_rw, 0,   0 },  f_undo,      { .i = -1 } },
 { .keyv.c = CONTROL('^'), { t_rw,  0,    0,   0 },  f_repeat,    { 0 } },
-{ .keyv.c = META('6'),    { t_rw,  0,    0,   0 },  f_pipeline,  { .v = "tr '\n' ' '" } }, /* Join lines */
+{ .keyv.c = META('6'),    { t_rw,  0,    0,   0 },  f_pipeline,  { .v = "tr '\n' ' '" } }, /* Join lines /
 { .keyv.c = META('5'),    { t_sel, t_rw, 0,   0 },  f_spawn,     REPLACE },
 { .keyv.c = CONTROL('?'), { t_rw,  0,    0,   0 },  f_delete,    { .m = m_prevchar    } },
 { .keyv.c = META(','),    { 0,     0,    0,   0 },  f_move,      { .m = m_bof         } },
 { .keyv.c = META('.'),    { 0,     0,    0,   0 },  f_move,      { .m = m_eof         } },
+*/
+{ .keyv.c = CONTROL('['), { t_ins, 0,  0,   0 },  f_toggle,    { .i = S_Command     } },
 };
 
-#if VIM_BINDINGS
-/* TODO: add better paste support (if whole line was yanked, append above,
- *       not where you are) */
 static const Key commkeys[] = { /* Command mode keys here */
 /* keyv.c,                  tests,                     func,       arg */
 { .keyv.c = { '$' },      { t_sent,0,    0,   0 },  f_adjective, { .m = m_eol          } },
@@ -256,7 +251,6 @@ static const Key commkeys[] = { /* Command mode keys here */
  * </> ident
  */
 };
-#endif
 
 #if HANDLE_MOUSE
 /*Mouse clicks */
